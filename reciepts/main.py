@@ -1,6 +1,8 @@
 import csv
 import os
 import qrcode
+from barcode import Code128
+from barcode.writer import ImageWriter
 from PIL import Image, ImageDraw, ImageFont
 import random
 width, height = 640, 240
@@ -27,8 +29,8 @@ with open(csv_file_path, 'r') as file:
     
     for row in csv_reader:
         
-        image_to_add_path = bg_array[random.randint(0,len(bg_array)-1)]
-        #image_to_add_path='bg_17.jpg'
+        #image_to_add_path = bg_array[random.randint(0,len(bg_array)-1)]
+        image_to_add_path='bg_11.jpg'
         image_to_add = Image.open(image_to_add_path)
         image_to_add = image_to_add.resize((640, 240))
         image_position = (0, 0)
@@ -37,7 +39,7 @@ with open(csv_file_path, 'r') as file:
         image_to_add_path = "solid.png"
         image_to_add = Image.open(image_to_add_path).convert("RGBA")
         image_to_add = image_to_add.resize((150, 112))
-        image_position = (420, 35)
+        image_position = (480, 120)
         image.paste(image_to_add, image_position, image_to_add)
         
         draw = ImageDraw.Draw(image)
@@ -59,21 +61,33 @@ with open(csv_file_path, 'r') as file:
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
             box_size=2.2,
-            border=4,
+            border=2,
         )
         qr.add_data(f"http://example.com/authenticate?participant_id={row[0]}")
         qr.make(fit=True)
 
         qr_image = qr.make_image(fill_color="black", back_color="white")
-        qr_position = (460, 50)
+        qr_position = (550, 20)
         image.paste(qr_image, qr_position)
         
         #qr end
+         
+        #barcode start
+       
+        # barcode_value = Code128(row[0], writer=ImageWriter())
+        # barcode_image = barcode_value.render()
+        # desired_size = (150, 70)
+        # barcode_image = barcode_image.resize(desired_size)
+        # barcode_position = (480, 20)
+        # image.paste(barcode_image, barcode_position)
+     
+        
+        #barcode end
         
         custom_font_path = "oykobold.ttf"
-        text = 'Participant : {} \nEmail : {}\nCollege : {} \nMobile : {}\nEvent : {} \nAmount Paid : {}'.format(row[1], row[2], truncate_string(row[4], 26),row[3],eventName, "yes")
+        text = 'Participant : {} \nEmail : {}\nCollege : {} \nMobile : {}\nEvent : {} \nAmount Paid : {}'.format(row[1], row[2], truncate_string(row[4], 32),row[3],eventName, "yes")
         text_color = "white"
-        custom_font = ImageFont.truetype(custom_font_path, 18)
+        custom_font = ImageFont.truetype(custom_font_path, 22)
         draw.text((20, 90), text, font=custom_font, fill=text_color)
         
         filename = folderName+'/{}.png'.format(row[1])
