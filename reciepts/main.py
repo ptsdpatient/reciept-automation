@@ -8,8 +8,8 @@ import random
 width, height = 640, 240
 image = Image.new("RGBA", (width, height), (255, 255, 255, 0))
 
-csv_file_path = './Virtual-Placement.csv'
-eventName = 'virtual-placement'
+csv_file_path = './respawn.csv'
+eventName = 'respawns'
 folderName='./'+eventName
 bg_array = []
 for i in range(0,25):
@@ -29,8 +29,7 @@ with open(csv_file_path, 'r') as file:
     
     for row in csv_reader:
         
-        #image_to_add_path = bg_array[random.randint(0,len(bg_array)-1)]
-        image_to_add_path='bg_11.jpg'
+        image_to_add_path = bg_array[random.randint(0,len(bg_array)-1)]
         image_to_add = Image.open(image_to_add_path)
         image_to_add = image_to_add.resize((640, 240))
         image_position = (0, 0)
@@ -63,7 +62,7 @@ with open(csv_file_path, 'r') as file:
             box_size=2.2,
             border=2,
         )
-        qr.add_data(f"http://example.com/authenticate?participant_id={row[0]}")
+        qr.add_data(f"https://qr-authenticate.vercel.app/?email={row[2]}")
         qr.make(fit=True)
 
         qr_image = qr.make_image(fill_color="black", back_color="white")
