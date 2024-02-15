@@ -75,7 +75,8 @@ for csv_file in csv_files:
                     box_size=2.2,
                     border=2,
                 )
-                qr.add_data(f"https://qr-authenticate.vercel.app/?email={row[2]}&event={str(file_name)}")
+                qr.add_data("https://qr-authenticate.vercel.app/?email={}&event={}".format(row[2],str(file_name)))
+                print("https://qr-authenticate.vercel.app/?email={}&event={}".format(row[2],str(file_name)))
                 qr.make(fit=True)
 
                 qr_image = qr.make_image(fill_color="black", back_color="white")
