@@ -144,8 +144,8 @@ for csv_file in csv_files:
                 custom_font_path = "oykobold.ttf"
                 text = 'Event Details \nDate : {} \nTime : {}'.format(date,time)
                 text_color = "white"
-                custom_font = ImageFont.truetype(custom_font_path, 9)
-                draw.text((410, 35), text, font=custom_font, fill=text_color)
+                custom_font = ImageFont.truetype(custom_font_path, 10)
+                draw.text((400, 35), text, font=custom_font, fill=text_color)
                 
                 #qr starts
                 
