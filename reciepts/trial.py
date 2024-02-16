@@ -1,7 +1,7 @@
-my_map = [{
+eventInfo = [{
     "eventName": "Cricbash",
     "Date": "20/02/24 & 21/02/24",
-    "Time": "Day 1 : 12:30-6:00\nDay 2 : 10:30-6:00 "
+    "Time": "Day 1 : 12:30-6:00 \n Day 2 : 10:30-6:00 "
 },{
     "eventName": "Avishkaar",
     "Date":"20/02/24",

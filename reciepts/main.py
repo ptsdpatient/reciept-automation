@@ -5,12 +5,16 @@ from barcode import Code128
 from barcode.writer import ImageWriter
 from PIL import Image, ImageDraw, ImageFont
 import random
+
+
 width, height = 640, 240
 image = Image.new("RGBA", (width, height), (255, 255, 255, 0))
 
 bg_array = []
 for i in range(0,25):
     bg_array.append("bg_{}.jpg".format(i))
+    
+random.shuffle(bg_array)
 
 def truncate_string(input_string, max_length):
     if len(input_string) > max_length:
@@ -61,11 +65,14 @@ for csv_file in csv_files:
                 custom_font = ImageFont.truetype(custom_font_path, 48)
                 draw.text((20, 20), text, font=custom_font, fill=text_color)
                 
-                # custom_font_path = "oykobold.ttf"
-                # text = 'Event Details \nDate : 20/02/2024 \nTime : 11:30 PM'
-                # text_color = "white"
-                # custom_font = ImageFont.truetype(custom_font_path, 18)
-                # draw.text((420, 35), text, font=custom_font, fill=text_color)
+                
+                
+                #eventDetails
+                custom_font_path = "oykobold.ttf"
+                text = 'Event Details \nDate : 20/02/2024 \nTime : 11:30 PM'
+                text_color = "white"
+                custom_font = ImageFont.truetype(custom_font_path, 13)
+                draw.text((405, 30), text, font=custom_font, fill=text_color)
                 
                 #qr starts
                 
