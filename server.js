@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Specify the path to your images folder
-const folderPath = './';
+const folderPath = './reciepts/';
 
 // Specify the path to your Excel file
 const excelFilePath = 'adhyaaya24registeration.xlsx';

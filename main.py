@@ -1,87 +1,39 @@
-import pygame
-import sys
-import random
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.image import MIMEImage
+import base64
 
-# Initialize Pygame
-pygame.init()
 
-# Constants
-WIDTH, HEIGHT = 600, 400
-BALL_RADIUS = 15
-PADDLE_WIDTH, PADDLE_HEIGHT = 10, 60
-FPS = 60
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
+smtp_server = "smtp.gmail.com"
+smtp_port = 587  
+smtp_username = "adhyaaya.gcoen@gmail.com"
+smtp_password = "jbeo kvvd eony eokq"
 
-# Create the game window
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("pong game")
 
-# Initialize ball position and velocity
-ball_x = WIDTH // 2
-ball_y = HEIGHT // 2
-ball_speed_x = random.choice([-0.5, 0.5])
-ball_speed_y = random.choice([-0.5, 0.5])
 
-# Initialize paddle positions
-left_paddle_y = (HEIGHT - PADDLE_HEIGHT) // 2
-right_paddle_y = (HEIGHT - PADDLE_HEIGHT) // 2
+def send_email(subject, body, to_email, image_path, smtp_server, smtp_port, smtp_username, smtp_password):  
+    message = MIMEMultipart()
+    message['From'] = smtp_username
+    message['To'] = to_email
+    message['Subject'] = subject
+    message.attach(MIMEText(body, 'plain'))
+    with open(image_path, 'rb') as image_file:
+        image = MIMEImage(image_file.read(), name='reciept.png')
+        message.attach(image)
+    with smtplib.SMTP(smtp_server, smtp_port) as server:
+        server.starttls()  
+        server.login(smtp_username, smtp_password)
+        server.sendmail(smtp_username, to_email, message.as_string())
 
-# Game loop
-clock = pygame.time.Clock()
 
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
 
-    # Move paddles
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_w] and left_paddle_y > 0:
-        left_paddle_y -= 5
-    if keys[pygame.K_s] and left_paddle_y < HEIGHT - PADDLE_HEIGHT:
-        left_paddle_y += 5
-    if keys[pygame.K_UP] and right_paddle_y > 0:
-        right_paddle_y -= 5
-    if keys[pygame.K_DOWN] and right_paddle_y < HEIGHT - PADDLE_HEIGHT:
-        right_paddle_y += 5
+subject = "Confirmation regarding online registeration in Adhyaaya'24"
+body = "Dear Participant,\n"+"We are excited to inform you that your registration for the Adhyaaya Technical fest has been confirmed. \nWe are sending you an attachment of your reciept so that we can authenticate you in the event.\n Join us for a fantastic event filled with technical challenges, workshops, and networking opportunities. Have fun! \nBest regards,\nAdhyaaya Technical Team"
+to_email = "tanishqbakka1@gmail.com"
+image_path = "./Bob.png"  
+send_email(subject, body, to_email, image_path, smtp_server, smtp_port, smtp_username, smtp_password)
 
-    # Move the ball
-    ball_x += ball_speed_x
-    ball_y += ball_speed_y
 
-    # Bounce off the top and bottom walls
-    if ball_y - BALL_RADIUS <= 0 or ball_y + BALL_RADIUS >= HEIGHT:
-        ball_speed_y = -ball_speed_y
 
-    # Bounce off the paddles
-    if (
-        (ball_x - BALL_RADIUS <= PADDLE_WIDTH and left_paddle_y <= ball_y <= left_paddle_y + PADDLE_HEIGHT) or
-        (ball_x + BALL_RADIUS >= WIDTH - PADDLE_WIDTH and right_paddle_y <= ball_y <= right_paddle_y + PADDLE_HEIGHT)
-    ):
-        ball_speed_x = -ball_speed_x
 
-    # Check if the ball missed the paddle
-    if ball_x - BALL_RADIUS <= 0 or ball_x + BALL_RADIUS >= WIDTH:
-        # Reset the ball position
-        ball_x = WIDTH // 2
-        ball_y = HEIGHT // 2
-        ball_speed_x = random.choice([-0.5, 0.5])
-        ball_speed_y = random.choice([-0.5, 0.5])
-
-    # Clear the screen
-    screen.fill(BLACK)
-
-    # Draw the paddles
-    pygame.draw.rect(screen, WHITE, (0, left_paddle_y, PADDLE_WIDTH, PADDLE_HEIGHT))
-    pygame.draw.rect(screen, WHITE, (WIDTH - PADDLE_WIDTH, right_paddle_y, PADDLE_WIDTH, PADDLE_HEIGHT))
-
-    # Draw the ball
-    pygame.draw.circle(screen, WHITE, (int(ball_x), int(ball_y)), BALL_RADIUS)
-
-    # Update the display
-    pygame.display.flip()
-
-    # Cap the frame rate
-   
