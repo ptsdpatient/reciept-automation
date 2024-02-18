@@ -198,9 +198,9 @@ for csv_file in csv_files:
                 image.save(filename)
                 subject = "Confirmation regarding online registeration in Adhyaaya'24"
                 body = "Dear Participant,\n"+"We are excited to inform you that your registration for the Adhyaaya Technical fest has been confirmed. \nWe are sending you an attachment of your reciept so that we can authenticate you in the event.\n Join us for a fantastic event filled with technical challenges, workshops, and networking opportunities. Have fun! \nBest regards,\nAdhyaaya Technical Team"
-                to_email = "tanishqbakka1@gmail.com"
+                to_email = "adityamuddamwar3@gmail.com"
                 image_path = filename 
-                send_email(subject, body, to_email, image_path, smtp_server, smtp_port, smtp_username, smtp_password)
+                #send_email(subject, body, to_email, image_path, smtp_server, smtp_port, smtp_username, smtp_password)
 
 
                 
